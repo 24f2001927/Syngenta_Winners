@@ -1,0 +1,29 @@
+@import "tailwindcss";
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+}
+
+:root {
+  --background: #C2B280;
+  --foreground: #2a2a24;
+}
+
+* {
+  scrollbar-color: #255531 #C2B280;
+  scrollbar-width: thin;
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-sans, "Calibri", Arial, Helvetica, sans-serif);
+}
+
+select option {
+  background: #f5f5ef;
+  color: #2a2a24;
+}
