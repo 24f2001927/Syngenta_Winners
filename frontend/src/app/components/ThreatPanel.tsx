@@ -1,8 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-
-const API_URL = "http://localhost:8000";
+import { apiUrl } from "@/lib/api";
 
 interface ThreatResult {
   risk_level: string;
@@ -50,7 +49,7 @@ export default function ThreatPanel() {
     setError("");
     setResult(null);
     try {
-      const res = await fetch(`${API_URL}/api/v1/threat/check`, {
+      const res = await fetch(apiUrl("/api/v1/threat/check"), {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ raw_text: rawText, source_trust: 0.8 }),

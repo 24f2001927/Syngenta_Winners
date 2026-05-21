@@ -1,0 +1,16 @@
+.env
+.env.*
+!.env.example
+!frontend/.env.example
+!backend/.env.example
+
+node_modules/
+.next/
+out/
+
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+
+.vercel/

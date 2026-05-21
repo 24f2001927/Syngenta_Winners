@@ -1,8 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-
-const API_URL = "http://localhost:8000";
+import { apiUrl } from "@/lib/api";
 
 interface AnalysisData {
   grower_devices?: { device_type: string; count: number }[];
@@ -183,7 +182,7 @@ export default function InsightsDashboard() {
   const [activeTab, setActiveTab] = useState("overview");
 
   useEffect(() => {
-    fetch(`${API_URL}/analysis`)
+    fetch(apiUrl("/analysis"))
       .then(r => r.json())
       .then(setData)
       .catch(console.error)
