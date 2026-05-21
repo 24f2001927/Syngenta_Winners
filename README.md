@@ -2,6 +2,8 @@
 
 **Kisaan Kavach: AI shield that detects crop threats, personalizes farmer outreach, and automates mitigation — all in real time.**
 
+**Live Demo:** https://syngenta-winners-uhme.vercel.app
+
 A scalable, AI-powered agricultural marketing and threat intelligence platform for Syngenta India. The platform combines a **LangGraph Bayesian threat detection pipeline** with a **personalized campaign engine** — targeting 6,000+ smallholder farmers with context-aware messaging in their native language while simultaneously monitoring for crop diseases using real-time weather telemetry.
 
 ---
