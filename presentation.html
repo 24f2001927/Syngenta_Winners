@@ -1,0 +1,1529 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Kisaan Kavach — AI Shield for Indian Agriculture</title>
+        <link
+            href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500&display=swap"
+            rel="stylesheet"
+        />
+        <style>
+            *,
+            *::before,
+            *::after {
+                margin: 0;
+                padding: 0;
+                box-sizing: border-box;
+            }
+            html {
+                scroll-behavior: smooth;
+            }
+
+            :root {
+                --bg-primary: #0a0a0a;
+                --bg-secondary: #111111;
+                --bg-card: #181818;
+                --bg-card-hover: #1f1f1f;
+                --border: #222222;
+                --border-light: #2a2a2a;
+                --text-primary: #f5f5f5;
+                --text-secondary: #999999;
+                --text-muted: #666666;
+                --green: #22c55e;
+                --green-dark: #166534;
+                --green-glow: rgba(34, 197, 94, 0.15);
+                --blue: #3b82f6;
+                --blue-dark: #1d4ed8;
+                --blue-glow: rgba(59, 130, 246, 0.15);
+                --red: #ef4444;
+                --red-dark: #b91c1c;
+                --red-glow: rgba(239, 68, 68, 0.15);
+                --orange: #f97316;
+                --yellow: #eab308;
+                --purple: #a855f7;
+                --cyan: #06b6d4;
+                --gradient-green: linear-gradient(135deg, #22c55e, #16a34a);
+                --gradient-blue: linear-gradient(135deg, #3b82f6, #2563eb);
+                --gradient-red: linear-gradient(135deg, #ef4444, #dc2626);
+                --gradient-purple: linear-gradient(135deg, #a855f7, #7c3aed);
+                --gradient-hero: linear-gradient(
+                    135deg,
+                    #0a0a0a 0%,
+                    #0f1a0f 40%,
+                    #0a0f1a 70%,
+                    #0a0a0a 100%
+                );
+                --shadow-card: 0 4px 20px rgba(0, 0, 0, 0.3);
+                --shadow-glow-green: 0 0 30px rgba(34, 197, 94, 0.08);
+                --shadow-glow-blue: 0 0 30px rgba(59, 130, 246, 0.08);
+                --radius: 16px;
+                --radius-sm: 10px;
+                --radius-xs: 6px;
+                --font: "Inter", -apple-system, sans-serif;
+                --mono: "JetBrains Mono", monospace;
+            }
+
+            body {
+                font-family: var(--font);
+                background: var(--bg-primary);
+                color: var(--text-primary);
+                line-height: 1.6;
+                overflow-x: hidden;
+            }
+
+            /* Scrollbar */
+            ::-webkit-scrollbar {
+                width: 6px;
+            }
+            ::-webkit-scrollbar-track {
+                background: var(--bg-primary);
+            }
+            ::-webkit-scrollbar-thumb {
+                background: #333;
+                border-radius: 3px;
+            }
+            ::-webkit-scrollbar-thumb:hover {
+                background: #555;
+            }
+
+            /* Navigation */
+            nav {
+                position: fixed;
+                top: 0;
+                left: 0;
+                right: 0;
+                z-index: 100;
+                background: rgba(10, 10, 10, 0.8);
+                backdrop-filter: blur(20px);
+                -webkit-backdrop-filter: blur(20px);
+                border-bottom: 1px solid var(--border);
+            }
+            nav .nav-inner {
+                max-width: 1200px;
+                margin: 0 auto;
+                padding: 0 24px;
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                height: 64px;
+            }
+            nav .logo {
+                display: flex;
+                align-items: center;
+                gap: 10px;
+                font-weight: 700;
+                font-size: 18px;
+                color: var(--text-primary);
+                text-decoration: none;
+            }
+            nav .logo .mark {
+                width: 32px;
+                height: 32px;
+                border-radius: 8px;
+                background: var(--gradient-green);
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                font-size: 14px;
+                font-weight: 800;
+                color: #000;
+            }
+            nav .nav-links {
+                display: flex;
+                align-items: center;
+                gap: 24px;
+                list-style: none;
+            }
+            nav .nav-links a {
+                color: var(--text-secondary);
+                text-decoration: none;
+                font-size: 13px;
+                font-weight: 500;
+                transition: color 0.2s;
+            }
+            nav .nav-links a:hover {
+                color: var(--text-primary);
+            }
+            nav .nav-cta {
+                padding: 8px 18px;
+                border-radius: var(--radius-xs);
+                background: var(--green);
+                color: #000 !important;
+                font-weight: 600 !important;
+                font-size: 13px !important;
+                transition: box-shadow 0.2s;
+            }
+            nav .nav-cta:hover {
+                box-shadow: 0 0 20px var(--green-glow);
+            }
+            .mobile-toggle {
+                display: none;
+                background: none;
+                border: none;
+                color: var(--text-primary);
+                cursor: pointer;
+                padding: 8px;
+            }
+
+            /* Hero */
+            .hero {
+                min-height: 100vh;
+                background: var(--gradient-hero);
+                display: flex;
+                align-items: center;
+                position: relative;
+                overflow: hidden;
+                padding: 120px 24px 80px;
+            }
+            .hero::before {
+                content: "";
+                position: absolute;
+                top: -50%;
+                left: -50%;
+                width: 200%;
+                height: 200%;
+                background:
+                    radial-gradient(
+                        ellipse at 30% 50%,
+                        rgba(34, 197, 94, 0.04) 0%,
+                        transparent 50%
+                    ),
+                    radial-gradient(
+                        ellipse at 70% 50%,
+                        rgba(59, 130, 246, 0.04) 0%,
+                        transparent 50%
+                    );
+                pointer-events: none;
+            }
+            .hero-grid {
+                max-width: 1200px;
+                margin: 0 auto;
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+                gap: 60px;
+                align-items: center;
+                position: relative;
+            }
+            .hero-badge {
+                display: inline-flex;
+                align-items: center;
+                gap: 6px;
+                padding: 6px 14px;
+                border-radius: 100px;
+                background: rgba(34, 197, 94, 0.1);
+                border: 1px solid rgba(34, 197, 94, 0.2);
+                font-size: 12px;
+                font-weight: 500;
+                color: var(--green);
+                margin-bottom: 20px;
+            }
+            .hero-badge .dot {
+                width: 6px;
+                height: 6px;
+                border-radius: 50%;
+                background: var(--green);
+                animation: pulse-dot 2s ease-in-out infinite;
+            }
+            @keyframes pulse-dot {
+                0%,
+                100% {
+                    opacity: 1;
+                    transform: scale(1);
+                }
+                50% {
+                    opacity: 0.5;
+                    transform: scale(0.8);
+                }
+            }
+            .hero h1 {
+                font-size: clamp(36px, 5vw, 60px);
+                font-weight: 900;
+                line-height: 1.1;
+                letter-spacing: -0.02em;
+                margin-bottom: 20px;
+            }
+            .hero h1 .highlight {
+                background: var(--gradient-green);
+                -webkit-background-clip: text;
+                -webkit-text-fill-color: transparent;
+                background-clip: text;
+            }
+            .hero h1 .highlight-blue {
+                background: var(--gradient-blue);
+                -webkit-background-clip: text;
+                -webkit-text-fill-color: transparent;
+                background-clip: text;
+            }
+            .hero p {
+                font-size: 16px;
+                color: var(--text-secondary);
+                max-width: 520px;
+                margin-bottom: 32px;
+                line-height: 1.7;
+            }
+            .hero-buttons {
+                display: flex;
+                gap: 12px;
+                flex-wrap: wrap;
+            }
+            .hero-buttons .btn-primary {
+                padding: 14px 32px;
+                border-radius: var(--radius-xs);
+                background: var(--green);
+                color: #000;
+                font-weight: 600;
+                font-size: 14px;
+                border: none;
+                cursor: pointer;
+                text-decoration: none;
+                transition:
+                    box-shadow 0.2s,
+                    transform 0.2s;
+            }
+            .hero-buttons .btn-primary:hover {
+                box-shadow: 0 0 30px var(--green-glow);
+                transform: translateY(-1px);
+            }
+            .hero-buttons .btn-secondary {
+                padding: 14px 32px;
+                border-radius: var(--radius-xs);
+                background: transparent;
+                color: var(--text-primary);
+                font-weight: 500;
+                font-size: 14px;
+                border: 1px solid var(--border-light);
+                cursor: pointer;
+                text-decoration: none;
+                transition:
+                    border-color 0.2s,
+                    background 0.2s;
+            }
+            .hero-buttons .btn-secondary:hover {
+                border-color: var(--text-secondary);
+                background: rgba(255, 255, 255, 0.03);
+            }
+
+            /* Hero visual */
+            .hero-visual {
+                position: relative;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+            }
+            .hero-graph {
+                width: 100%;
+                max-width: 480px;
+                aspect-ratio: 1;
+                position: relative;
+            }
+            .hero-graph .ring {
+                position: absolute;
+                border-radius: 50%;
+                border: 1px solid rgba(255, 255, 255, 0.06);
+            }
+            .hero-graph .ring:nth-child(1) {
+                inset: 5%;
+                animation: spin 30s linear infinite;
+                border-color: rgba(34, 197, 94, 0.1);
+            }
+            .hero-graph .ring:nth-child(2) {
+                inset: 18%;
+                animation: spin 25s linear infinite reverse;
+                border-color: rgba(59, 130, 246, 0.08);
+            }
+            .hero-graph .ring:nth-child(3) {
+                inset: 32%;
+                animation: spin 20s linear infinite;
+                border-color: rgba(239, 68, 68, 0.06);
+            }
+            .hero-graph .center-icon {
+                position: absolute;
+                inset: 38%;
+                border-radius: 50%;
+                background: var(--gradient-green);
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                font-size: 28px;
+                font-weight: 900;
+                color: #000;
+                box-shadow: 0 0 40px rgba(34, 197, 94, 0.2);
+            }
+            .hero-graph .node {
+                position: absolute;
+                width: 48px;
+                height: 48px;
+                border-radius: 50%;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                font-size: 10px;
+                font-weight: 600;
+                color: #fff;
+                letter-spacing: 0.5px;
+                box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+            }
+            .hero-graph .node-1 {
+                top: 2%;
+                left: 50%;
+                transform: translateX(-50%);
+                background: var(--gradient-green);
+            }
+            .hero-graph .node-2 {
+                top: 30%;
+                right: 2%;
+                background: var(--gradient-blue);
+            }
+            .hero-graph .node-3 {
+                bottom: 20%;
+                right: 5%;
+                background: var(--gradient-red);
+            }
+            .hero-graph .node-4 {
+                bottom: 5%;
+                left: 50%;
+                transform: translateX(-50%);
+                background: var(--gradient-purple);
+            }
+            .hero-graph .node-5 {
+                top: 30%;
+                left: 2%;
+                background: var(--orange);
+            }
+
+            @keyframes spin {
+                to {
+                    transform: rotate(360deg);
+                }
+            }
+
+            .hero-stats {
+                display: flex;
+                gap: 24px;
+                margin-top: 40px;
+                flex-wrap: wrap;
+            }
+            .hero-stats .stat {
+                display: flex;
+                flex-direction: column;
+            }
+            .hero-stats .stat .num {
+                font-size: 24px;
+                font-weight: 800;
+                background: var(--gradient-green);
+                -webkit-background-clip: text;
+                -webkit-text-fill-color: transparent;
+                background-clip: text;
+            }
+            .hero-stats .stat .num.blue {
+                background: var(--gradient-blue);
+                -webkit-background-clip: text;
+                -webkit-text-fill-color: transparent;
+                background-clip: text;
+            }
+            .hero-stats .stat .num.red {
+                background: var(--gradient-red);
+                -webkit-background-clip: text;
+                -webkit-text-fill-color: transparent;
+                background-clip: text;
+            }
+            .hero-stats .stat .label {
+                font-size: 12px;
+                color: var(--text-muted);
+                font-weight: 500;
+            }
+
+            /* Sections */
+            section {
+                padding: 100px 24px;
+            }
+            .section-inner {
+                max-width: 1200px;
+                margin: 0 auto;
+            }
+            .section-tag {
+                display: inline-flex;
+                align-items: center;
+                gap: 6px;
+                padding: 4px 12px;
+                border-radius: 100px;
+                background: rgba(34, 197, 94, 0.08);
+                border: 1px solid rgba(34, 197, 94, 0.15);
+                font-size: 11px;
+                font-weight: 600;
+                color: var(--green);
+                text-transform: uppercase;
+                letter-spacing: 0.5px;
+                margin-bottom: 12px;
+            }
+            .section-tag.blue {
+                background: rgba(59, 130, 246, 0.08);
+                border-color: rgba(59, 130, 246, 0.15);
+                color: var(--blue);
+            }
+            .section-tag.red {
+                background: rgba(239, 68, 68, 0.08);
+                border-color: rgba(239, 68, 68, 0.15);
+                color: var(--red);
+            }
+            .section-tag.purple {
+                background: rgba(168, 85, 247, 0.08);
+                border-color: rgba(168, 85, 247, 0.15);
+                color: var(--purple);
+            }
+            .section-title {
+                font-size: clamp(28px, 3.5vw, 40px);
+                font-weight: 800;
+                line-height: 1.2;
+                margin-bottom: 14px;
+                letter-spacing: -0.01em;
+            }
+            .section-sub {
+                font-size: 15px;
+                color: var(--text-secondary);
+                max-width: 600px;
+                line-height: 1.7;
+            }
+
+            /* Divider */
+            .section-divider {
+                height: 1px;
+                background: var(--border);
+                margin: 0 24px;
+            }
+
+            /* Cards grid */
+            .cards-grid {
+                display: grid;
+                grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+                gap: 20px;
+                margin-top: 40px;
+            }
+            .card {
+                background: var(--bg-card);
+                border: 1px solid var(--border);
+                border-radius: var(--radius);
+                padding: 28px;
+                transition:
+                    border-color 0.3s,
+                    transform 0.3s,
+                    box-shadow 0.3s;
+                position: relative;
+                overflow: hidden;
+            }
+            .card:hover {
+                border-color: var(--border-light);
+                transform: translateY(-2px);
+                box-shadow: var(--shadow-card);
+            }
+            .card .icon-wrap {
+                width: 40px;
+                height: 40px;
+                border-radius: var(--radius-sm);
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                margin-bottom: 16px;
+            }
+            .card h3 {
+                font-size: 16px;
+                font-weight: 700;
+                margin-bottom: 8px;
+            }
+            .card p {
+                font-size: 13px;
+                color: var(--text-secondary);
+                line-height: 1.7;
+            }
+            .card .tags {
+                display: flex;
+                gap: 6px;
+                flex-wrap: wrap;
+                margin-top: 14px;
+            }
+            .card .tags span {
+                padding: 3px 10px;
+                border-radius: 100px;
+                font-size: 10px;
+                font-weight: 600;
+                background: rgba(255, 255, 255, 0.04);
+                border: 1px solid rgba(255, 255, 255, 0.06);
+                color: var(--text-muted);
+            }
+
+            /* Architecture flow */
+            .flow {
+                margin-top: 40px;
+            }
+            .flow-row {
+                display: flex;
+                align-items: center;
+                gap: 8px;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            .flow-node {
+                padding: 10px 18px;
+                border-radius: var(--radius-sm);
+                font-size: 12px;
+                font-weight: 600;
+                color: #fff;
+                text-align: center;
+                white-space: nowrap;
+            }
+            .flow-node.green {
+                background: var(--gradient-green);
+            }
+            .flow-node.blue {
+                background: var(--gradient-blue);
+            }
+            .flow-node.red {
+                background: var(--gradient-red);
+            }
+            .flow-node.purple {
+                background: var(--gradient-purple);
+            }
+            .flow-node.orange {
+                background: var(--orange);
+            }
+            .flow-node.gray {
+                background: var(--bg-card);
+                border: 1px solid var(--border);
+                color: var(--text-secondary);
+            }
+            .flow-arrow {
+                color: var(--text-muted);
+                font-size: 16px;
+            }
+
+            /* Stats row */
+            .stats-row {
+                display: grid;
+                grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+                gap: 16px;
+                margin-top: 40px;
+            }
+            .stat-card {
+                background: var(--bg-card);
+                border: 1px solid var(--border);
+                border-radius: var(--radius);
+                padding: 24px;
+                text-align: center;
+                transition: border-color 0.3s;
+            }
+            .stat-card:hover {
+                border-color: var(--border-light);
+            }
+            .stat-card .num {
+                font-size: 32px;
+                font-weight: 900;
+                line-height: 1.2;
+            }
+            .stat-card .num.green {
+                background: var(--gradient-green);
+                -webkit-background-clip: text;
+                -webkit-text-fill-color: transparent;
+                background-clip: text;
+            }
+            .stat-card .num.blue {
+                background: var(--gradient-blue);
+                -webkit-background-clip: text;
+                -webkit-text-fill-color: transparent;
+                background-clip: text;
+            }
+            .stat-card .num.red {
+                background: var(--gradient-red);
+                -webkit-background-clip: text;
+                -webkit-text-fill-color: transparent;
+                background-clip: text;
+            }
+            .stat-card .num.purple {
+                background: var(--gradient-purple);
+                -webkit-background-clip: text;
+                -webkit-text-fill-color: transparent;
+                background-clip: text;
+            }
+            .stat-card .num.orange {
+                color: var(--orange);
+            }
+            .stat-card .label {
+                font-size: 12px;
+                color: var(--text-muted);
+                font-weight: 500;
+                margin-top: 4px;
+            }
+
+            /* Architecture section */
+            #architecture {
+                background: var(--bg-secondary);
+            }
+            .arch-grid {
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+                gap: 24px;
+                margin-top: 40px;
+            }
+            .arch-card {
+                background: var(--bg-card);
+                border: 1px solid var(--border);
+                border-radius: var(--radius);
+                padding: 28px;
+            }
+            .arch-card h3 {
+                font-size: 15px;
+                font-weight: 700;
+                margin-bottom: 16px;
+                display: flex;
+                align-items: center;
+                gap: 8px;
+            }
+            .arch-card ul {
+                list-style: none;
+            }
+            .arch-card ul li {
+                padding: 8px 0;
+                font-size: 13px;
+                color: var(--text-secondary);
+                border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+                display: flex;
+                align-items: center;
+                gap: 8px;
+            }
+            .arch-card ul li:last-child {
+                border-bottom: none;
+            }
+            .arch-card ul li::before {
+                content: "";
+                width: 5px;
+                height: 5px;
+                border-radius: 50%;
+                background: var(--green);
+                flex-shrink: 0;
+            }
+            .arch-card ul li.blue::before {
+                background: var(--blue);
+            }
+            .arch-card ul li.red::before {
+                background: var(--red);
+            }
+            .arch-card ul li.purple::before {
+                background: var(--purple);
+            }
+
+            /* Bayesian formula */
+            .formula-box {
+                margin-top: 40px;
+                background: var(--bg-card);
+                border: 1px solid var(--border);
+                border-radius: var(--radius);
+                padding: 32px;
+                text-align: center;
+            }
+            .formula-box .formula {
+                font-family: var(--mono);
+                font-size: clamp(14px, 2vw, 20px);
+                color: var(--text-primary);
+                line-height: 1.8;
+            }
+            .formula-box .formula .g {
+                color: var(--green);
+            }
+            .formula-box .formula .b {
+                color: var(--blue);
+            }
+            .formula-box .formula .r {
+                color: var(--red);
+            }
+            .formula-box .formula .p {
+                color: var(--purple);
+            }
+
+            /* Tech stack */
+            #tech {
+                background: var(--bg-secondary);
+            }
+            .tech-grid {
+                display: grid;
+                grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+                gap: 12px;
+                margin-top: 40px;
+            }
+            .tech-item {
+                background: var(--bg-card);
+                border: 1px solid var(--border);
+                border-radius: var(--radius-sm);
+                padding: 18px;
+                text-align: center;
+                font-size: 13px;
+                font-weight: 600;
+                transition:
+                    border-color 0.2s,
+                    background 0.2s;
+            }
+            .tech-item:hover {
+                border-color: var(--border-light);
+                background: var(--bg-card-hover);
+            }
+            .tech-item .sub {
+                font-size: 10px;
+                color: var(--text-muted);
+                font-weight: 400;
+                margin-top: 2px;
+            }
+
+            /* Bayesian thresholds */
+            .thresholds {
+                display: grid;
+                grid-template-columns: repeat(4, 1fr);
+                gap: 12px;
+                margin-top: 40px;
+            }
+            .threshold {
+                border-radius: var(--radius);
+                padding: 20px;
+                text-align: center;
+                border: 1px solid transparent;
+            }
+            .threshold.critical {
+                background: rgba(239, 68, 68, 0.1);
+                border-color: rgba(239, 68, 68, 0.2);
+            }
+            .threshold.high {
+                background: rgba(249, 115, 22, 0.1);
+                border-color: rgba(249, 115, 22, 0.2);
+            }
+            .threshold.moderate {
+                background: rgba(234, 179, 8, 0.1);
+                border-color: rgba(234, 179, 8, 0.2);
+            }
+            .threshold.low {
+                background: rgba(34, 197, 94, 0.1);
+                border-color: rgba(34, 197, 94, 0.2);
+            }
+            .threshold .pct {
+                font-size: 28px;
+                font-weight: 900;
+            }
+            .threshold.critical .pct {
+                color: var(--red);
+            }
+            .threshold.high .pct {
+                color: var(--orange);
+            }
+            .threshold.moderate .pct {
+                color: var(--yellow);
+            }
+            .threshold.low .pct {
+                color: var(--green);
+            }
+            .threshold .label {
+                font-size: 11px;
+                font-weight: 600;
+                margin-top: 2px;
+                text-transform: uppercase;
+                letter-spacing: 0.5px;
+            }
+            .threshold .action {
+                font-size: 11px;
+                color: var(--text-muted);
+                margin-top: 6px;
+            }
+
+            /* Screens section */
+            .screen-grid {
+                display: grid;
+                grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+                gap: 16px;
+                margin-top: 40px;
+            }
+            .screen-card {
+                background: var(--bg-card);
+                border: 1px solid var(--border);
+                border-radius: var(--radius);
+                padding: 24px;
+                transition:
+                    border-color 0.3s,
+                    transform 0.3s;
+            }
+            .screen-card:hover {
+                border-color: var(--border-light);
+                transform: translateY(-2px);
+            }
+            .screen-card .icon {
+                font-size: 24px;
+                margin-bottom: 10px;
+            }
+            .screen-card h4 {
+                font-size: 14px;
+                font-weight: 700;
+                margin-bottom: 4px;
+            }
+            .screen-card p {
+                font-size: 12px;
+                color: var(--text-secondary);
+            }
+
+            /* Footer */
+            footer {
+                border-top: 1px solid var(--border);
+                padding: 40px 24px;
+                text-align: center;
+            }
+            footer p {
+                font-size: 13px;
+                color: var(--text-muted);
+            }
+
+            /* Responsive */
+            @media (max-width: 900px) {
+                .hero-grid {
+                    grid-template-columns: 1fr;
+                    gap: 40px;
+                }
+                .hero-visual {
+                    order: -1;
+                }
+                .hero-graph {
+                    max-width: 320px;
+                }
+                .arch-grid {
+                    grid-template-columns: 1fr;
+                }
+                .thresholds {
+                    grid-template-columns: repeat(2, 1fr);
+                }
+            }
+            @media (max-width: 600px) {
+                nav .nav-links {
+                    display: none;
+                }
+                .mobile-toggle {
+                    display: block;
+                }
+                .hero {
+                    padding: 100px 16px 60px;
+                }
+                section {
+                    padding: 60px 16px;
+                }
+                .hero-stats .stat .num {
+                    font-size: 20px;
+                }
+                .flow-row {
+                    gap: 4px;
+                }
+                .flow-node {
+                    font-size: 10px;
+                    padding: 6px 12px;
+                }
+                .thresholds {
+                    grid-template-columns: 1fr 1fr;
+                }
+                .stats-row {
+                    grid-template-columns: repeat(2, 1fr);
+                }
+            }
+        </style>
+    </head>
+    <body>
+        <!-- Navigation -->
+        <nav>
+            <div class="nav-inner">
+                <a href="#" class="logo"
+                    ><span class="mark">K</span> Kisaan Kavach</a
+                >
+                <ul class="nav-links">
+                    <li><a href="#overview">Overview</a></li>
+                    <li><a href="#features">Features</a></li>
+                    <li><a href="#architecture">Architecture</a></li>
+                    <li><a href="#tech">Tech Stack</a></li>
+                    <li><a href="#screens">Screens</a></li>
+                    <li><a href="#stats" class="nav-cta">Live Demo</a></li>
+                </ul>
+                <button
+                    class="mobile-toggle"
+                    onclick="
+                        document.querySelector('.nav-links').style.display =
+                            'flex'
+                    "
+                >
+                    <svg
+                        width="20"
+                        height="20"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="2"
+                    >
+                        <path d="M3 12h18M3 6h18M3 18h18" />
+                    </svg>
+                </button>
+            </div>
+        </nav>
+
+        <!-- Hero -->
+        <section class="hero" id="overview">
+            <div class="hero-grid">
+                <div>
+                    <div class="hero-badge">
+                        <span class="dot"></span> Live — Rabi 2025-26 Season
+                    </div>
+                    <h1>
+                        <span class="highlight">Kisaan</span><br />
+                        <span class="highlight-blue">Kavach</span>
+                    </h1>
+                    <p>
+                        AI shield that detects crop threats, personalizes farmer
+                        outreach, and automates mitigation — all in real time.
+                        Personalized campaign outreach across 6,000+ growers
+                        with Bayesian threat fusion, LLM-generated
+                        prescriptions, and automated mitigation triggers.
+                    </p>
+                    <div class="hero-buttons">
+                        <a href="#stats" class="btn-primary">View Live Stats</a>
+                        <a href="#architecture" class="btn-secondary"
+                            >Explore Architecture</a
+                        >
+                    </div>
+                    <div class="hero-stats">
+                        <div class="stat">
+                            <span class="num">6,000+</span
+                            ><span class="label">Growers</span>
+                        </div>
+                        <div class="stat">
+                            <span class="num blue">10</span
+                            ><span class="label">States</span>
+                        </div>
+                        <div class="stat">
+                            <span class="num red">6</span
+                            ><span class="label">Languages</span>
+                        </div>
+                        <div class="stat">
+                            <span class="num">9</span
+                            ><span class="label">LangGraph Nodes</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="hero-visual">
+                    <div class="hero-graph">
+                        <div class="ring"></div>
+                        <div class="ring"></div>
+                        <div class="ring"></div>
+                        <div class="center-icon">G</div>
+                        <div class="node node-1">NER</div>
+                        <div class="node node-2">BAYES</div>
+                        <div class="node node-3">THREAT</div>
+                        <div class="node node-4">SCORE</div>
+                        <div class="node node-5">LLM</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <div class="section-divider"></div>
+
+        <!-- Features -->
+        <section id="features">
+            <div class="section-inner">
+                <div class="section-tag">Core Capabilities</div>
+                <h2 class="section-title">Three Integrated Verticals</h2>
+                <p class="section-sub">
+                    Campaign engine, threat detection, and analytics — all
+                    feeding each other in real time.
+                </p>
+
+                <div class="cards-grid">
+                    <div class="card">
+                        <div
+                            class="icon-wrap"
+                            style="background: rgba(34, 197, 94, 0.15)"
+                        >
+                            <svg
+                                width="20"
+                                height="20"
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                stroke="#22c55e"
+                                stroke-width="2"
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                            >
+                                <path d="M22 12h-4l-3 9L9 3l-3 9H2" />
+                            </svg>
+                        </div>
+                        <h3>Campaign Engine</h3>
+                        <p>
+                            Personalized message generation for 6,000+ growers
+                            across 10 states. LLM-powered content in 6
+                            languages, optimized by device type and send timing.
+                            Receptivity scoring with 8 weighted factors
+                            including live threat context.
+                        </p>
+                        <div class="tags">
+                            <span>NVIDIA LLM</span><span>Batch Gen</span
+                            ><span>Push Delivery</span>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div
+                            class="icon-wrap"
+                            style="background: rgba(239, 68, 68, 0.15)"
+                        >
+                            <svg
+                                width="20"
+                                height="20"
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                stroke="#ef4444"
+                                stroke-width="2"
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                            >
+                                <path d="M12 9v4m0 4h.01" />
+                                <path
+                                    d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20z"
+                                />
+                            </svg>
+                        </div>
+                        <h3>Threat Detection</h3>
+                        <p>
+                            9-node LangGraph Bayesian pipeline ingesting
+                            unstructured field reports, cross-verifying against
+                            Open-Meteo weather telemetry, and outputting
+                            probabilistic risk maps with automated mitigation
+                            prescriptions.
+                        </p>
+                        <div class="tags">
+                            <span>Bayesian Fusion</span><span>Open-Meteo</span
+                            ><span>Auto-Mitigation</span>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div
+                            class="icon-wrap"
+                            style="background: rgba(59, 130, 246, 0.15)"
+                        >
+                            <svg
+                                width="20"
+                                height="20"
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                stroke="#3b82f6"
+                                stroke-width="2"
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                            >
+                                <path d="M3 3v18h18" />
+                                <path d="M7 16l4-8 4 4 4-6" />
+                            </svg>
+                        </div>
+                        <h3>Analytics Dashboard</h3>
+                        <p>
+                            6-tab responsive popup with SVG charts — donut, bar,
+                            and funnel visualizations across 7 data sources:
+                            devices, farm segments, marketing funnel, rep
+                            activity, supply chain, territory balance, and
+                            WhatsApp sales.
+                        </p>
+                        <div class="tags">
+                            <span>7 CSVs</span><span>SVG Charts</span
+                            ><span>Real-time</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <div class="section-divider"></div>
+
+        <!-- Stats -->
+        <section id="stats">
+            <div class="section-inner">
+                <div class="section-tag blue">Live Metrics</div>
+                <h2 class="section-title">Platform at a Glance</h2>
+                <p class="section-sub">
+                    Real data from the Rabi 2025-26 season across India.
+                </p>
+
+                <div class="stats-row">
+                    <div class="stat-card">
+                        <div class="num green">6,000</div>
+                        <div class="label">Total Growers</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="num blue">10</div>
+                        <div class="label">States Covered</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="num green">4,479</div>
+                        <div class="label">Smartphone Users</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="num red">3,276</div>
+                        <div class="label">Marginal Farms (&lt;2 acres)</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="num purple">3.9M</div>
+                        <div class="label">Social Impressions</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="num blue">2,264</div>
+                        <div class="label">Marketing Leads</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="num orange">500</div>
+                        <div class="label">Field Reps</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="num green">13</div>
+                        <div class="label">Active SKUs</div>
+                    </div>
+                </div>
+
+                <!-- Bayesian Thresholds -->
+                <div class="thresholds">
+                    <div class="threshold critical">
+                        <div class="pct">≥85%</div>
+                        <div class="label">CRITICAL</div>
+                        <div class="action">
+                            Drone spray · SMS alerts · Fertigation lockout
+                        </div>
+                    </div>
+                    <div class="threshold high">
+                        <div class="pct">≥60%</div>
+                        <div class="label">HIGH</div>
+                        <div class="action">
+                            Advisory · Scout fields · Prepare mitigation
+                        </div>
+                    </div>
+                    <div class="threshold moderate">
+                        <div class="pct">≥30%</div>
+                        <div class="label">MODERATE</div>
+                        <div class="action">Monitor · Continue observation</div>
+                    </div>
+                    <div class="threshold low">
+                        <div class="pct">&lt;30%</div>
+                        <div class="label">LOW</div>
+                        <div class="action">
+                            Discard — insufficient confidence
+                        </div>
+                    </div>
+                </div>
+
+                <div class="formula-box">
+                    <div class="formula">
+                        <span class="b"
+                            >P(R<sub>true</sub> | W<sub>t</sub>,
+                            S<sub>trust</sub>)</span
+                        >
+                        <span style="color: var(--text-muted)"> = </span>
+                        <span class="g">L</span
+                        ><span style="color: var(--text-muted)"> · </span
+                        ><span class="p">P</span
+                        ><span style="color: var(--text-muted)"> · </span
+                        ><span class="b">S</span>
+                        <span style="color: var(--text-muted)"> / (</span>
+                        <span class="g">L</span
+                        ><span style="color: var(--text-muted)">·</span
+                        ><span class="p">P</span
+                        ><span style="color: var(--text-muted)">·</span
+                        ><span class="b">S</span>
+                        <span style="color: var(--text-muted)"> + (1-</span
+                        ><span class="g">L</span
+                        ><span style="color: var(--text-muted)">)·(1-</span
+                        ><span class="p">P</span
+                        ><span style="color: var(--text-muted)">)·(1-</span
+                        ><span class="b">S</span
+                        ><span style="color: var(--text-muted)">))</span>
+                    </div>
+                    <div
+                        style="
+                            display: flex;
+                            gap: 24px;
+                            justify-content: center;
+                            margin-top: 16px;
+                            flex-wrap: wrap;
+                            font-size: 12px;
+                            color: var(--text-muted);
+                        "
+                    >
+                        <span
+                            ><span style="color: var(--green); font-weight: 600"
+                                >L</span
+                            >
+                            = Likelihood (weather favours pathogen)</span
+                        >
+                        <span
+                            ><span
+                                style="color: var(--purple); font-weight: 600"
+                                >P</span
+                            >
+                            = Historical prior (disease in region)</span
+                        >
+                        <span
+                            ><span style="color: var(--blue); font-weight: 600"
+                                >S</span
+                            >
+                            = Source trust (beta-binomial)</span
+                        >
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <div class="section-divider"></div>
+
+        <!-- Architecture -->
+        <section id="architecture">
+            <div class="section-inner">
+                <div class="section-tag red">System Design</div>
+                <h2 class="section-title">LangGraph Bayesian Pipeline</h2>
+                <p class="section-sub">
+                    A directed state machine with 9 nodes. Four optionally use
+                    NVIDIA LLM with automatic fallback to deterministic logic.
+                </p>
+
+                <!-- Flow diagram -->
+                <div class="flow">
+                    <div class="flow-row">
+                        <span class="flow-node green">Ingestion</span>
+                        <span class="flow-arrow">→</span>
+                        <span class="flow-node blue">NER Extraction</span>
+                        <span class="flow-arrow">↕</span>
+                        <span class="flow-node gray">NVIDIA LLM</span>
+                    </div>
+                    <div class="flow-row" style="margin-top: 8px">
+                        <span class="flow-arrow">↓</span>
+                    </div>
+                    <div class="flow-row">
+                        <span class="flow-node blue">Weather API</span>
+                        <span class="flow-arrow">→</span>
+                        <span class="flow-node orange">Suitability</span>
+                        <span class="flow-arrow">↕</span>
+                        <span class="flow-node gray">NVIDIA LLM</span>
+                    </div>
+                    <div class="flow-row" style="margin-top: 8px">
+                        <span class="flow-arrow">↓</span>
+                    </div>
+                    <div class="flow-row" style="gap: 16px">
+                        <span class="flow-node purple">Historical Prior</span>
+                        <span class="flow-node red">Likelihood</span>
+                        <span class="flow-node green">Source Trust</span>
+                        <span class="flow-node gray" style="font-size: 10px"
+                            >↕ LLM</span
+                        >
+                    </div>
+                    <div class="flow-row" style="margin-top: 8px">
+                        <span class="flow-arrow">↓</span>
+                    </div>
+                    <div class="flow-row">
+                        <span class="flow-node red" style="padding: 12px 24px"
+                            >Bayesian Fusion</span
+                        >
+                    </div>
+                    <div class="flow-row" style="margin-top: 8px">
+                        <span class="flow-arrow">↓</span>
+                    </div>
+                    <div class="flow-row">
+                        <span class="flow-node purple">Decision Engine</span>
+                        <span class="flow-arrow">↕</span>
+                        <span class="flow-node gray">NVIDIA LLM</span>
+                    </div>
+                    <div class="flow-row" style="margin-top: 8px">
+                        <span class="flow-arrow">↓ route_by_confidence ↓</span>
+                    </div>
+                    <div class="flow-row" style="gap: 12px">
+                        <span class="flow-node red" style="font-size: 11px"
+                            >CRITICAL ≥85%</span
+                        >
+                        <span class="flow-node orange" style="font-size: 11px"
+                            >HIGH ≥60%</span
+                        >
+                        <span
+                            class="flow-node"
+                            style="
+                                font-size: 11px;
+                                background: var(--yellow);
+                                color: #000;
+                            "
+                            >MOD ≥30%</span
+                        >
+                        <span class="flow-node green" style="font-size: 11px"
+                            >LOW &lt;30%</span
+                        >
+                    </div>
+                </div>
+
+                <div class="arch-grid">
+                    <div class="arch-card">
+                        <h3>
+                            <span style="color: var(--green)">●</span> LLM Nodes
+                            (NVIDIA meta/llama-3.1-8b)
+                        </h3>
+                        <ul>
+                            <li>
+                                NER Extraction — misspellings, regional names,
+                                multilingual
+                            </li>
+                            <li class="blue">
+                                Suitability Index — biophysical reasoning from
+                                weather + pathogen
+                            </li>
+                            <li class="red">
+                                Likelihood — contextual P(W<sub>t</sub> |
+                                D<sub>active</sub>)
+                            </li>
+                            <li class="purple">
+                                Decision — structured prescription: product,
+                                dosage, measures
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="arch-card">
+                        <h3>
+                            <span style="color: var(--red)">●</span> Graceful
+                            Degradation
+                        </h3>
+                        <ul>
+                            <li>
+                                Has API key? → Validate (chat completions probe,
+                                5s)
+                            </li>
+                            <li class="blue">
+                                Fail / No key → Deterministic fallback instantly
+                            </li>
+                            <li class="red">
+                                Network error / Timeout (10s) → Fallback
+                            </li>
+                            <li class="purple">Bad response JSON → Fallback</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <div class="section-divider"></div>
+
+        <!-- Tech Stack -->
+        <section id="tech">
+            <div class="section-inner">
+                <div class="section-tag purple">Technology</div>
+                <h2 class="section-title">Built With</h2>
+                <div class="tech-grid">
+                    <div class="tech-item">
+                        FastAPI
+                        <div class="sub">Python Backend</div>
+                    </div>
+                    <div class="tech-item">
+                        Next.js
+                        <div class="sub">React Frontend</div>
+                    </div>
+                    <div class="tech-item">
+                        LangGraph
+                        <div class="sub">State Machine</div>
+                    </div>
+                    <div class="tech-item">
+                        NVIDIA LLM
+                        <div class="sub">meta/llama-3.1-8b</div>
+                    </div>
+                    <div class="tech-item">
+                        Pandas
+                        <div class="sub">Data Processing</div>
+                    </div>
+                    <div class="tech-item">
+                        Open-Meteo
+                        <div class="sub">Weather API</div>
+                    </div>
+                    <div class="tech-item">
+                        Tailwind CSS
+                        <div class="sub">Styling</div>
+                    </div>
+                    <div class="tech-item">
+                        Bayesian
+                        <div class="sub">Inference Engine</div>
+                    </div>
+                    <div class="tech-item">
+                        Python 3.14
+                        <div class="sub">Runtime</div>
+                    </div>
+                    <div class="tech-item">
+                        TypeScript
+                        <div class="sub">Frontend</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <div class="section-divider"></div>
+
+        <!-- Screens -->
+        <section id="screens">
+            <div class="section-inner">
+                <div class="section-tag">User Interface</div>
+                <h2 class="section-title">Key Screens</h2>
+                <p class="section-sub">
+                    All within a single-page dashboard with pop-up modals for
+                    deep dives.
+                </p>
+
+                <div class="screen-grid">
+                    <div class="screen-card">
+                        <div class="icon"></div>
+                        <h4>Main Dashboard</h4>
+                        <p>
+                            Grower table with filters, multi-select, campaign
+                            generator with LLM personalization.
+                        </p>
+                    </div>
+                    <div class="screen-card">
+                        <div class="icon"></div>
+                        <h4>Campaigns Modal</h4>
+                        <p>
+                            View, create with writable product autocomplete, and
+                            delete campaigns. New products sync instantly.
+                        </p>
+                    </div>
+                    <div class="screen-card">
+                        <div class="icon"></div>
+                        <h4>Analytics Dashboard</h4>
+                        <p>
+                            6-tab popup: Overview, Growers, Marketing, Supply
+                            Chain, Territory, WhatsApp Sales with SVG charts.
+                        </p>
+                    </div>
+                    <div class="screen-card">
+                        <div class="icon"></div>
+                        <h4>Threat Scan Panel</h4>
+                        <p>
+                            Real-time threat assessment with Bayesian
+                            confidence, color-coded risk levels, and LLM
+                            prescriptions.
+                        </p>
+                    </div>
+                    <div class="screen-card">
+                        <div class="icon"></div>
+                        <h4>Receptivity Scores</h4>
+                        <p>
+                            Per-grower 0-100 engagement predictions with
+                            open/click rate forecasts.
+                        </p>
+                    </div>
+                    <div class="screen-card">
+                        <div class="icon"></div>
+                        <h4>Push Delivery</h4>
+                        <p>
+                            One-click push via WhatsApp, SMS, or Voice with
+                            channel optimization per device type.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer>
+            <p>Kisaan Kavach · Syngenta AI Marketing Platform · Rabi 2025-26</p>
+        </footer>
+    </body>
+</html>
