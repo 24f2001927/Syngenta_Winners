@@ -181,19 +181,53 @@ export default function InsightsDashboard() {
   const [data, setData] = useState<AnalysisData | null>(null);
   const [loading, setLoading] = useState(true);
   const [activeTab, setActiveTab] = useState("overview");
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    fetch(`${API_URL}/analysis`)
-      .then(r => r.json())
-      .then(setData)
-      .catch(console.error)
-      .finally(() => setLoading(false));
+    const fetchData = async () => {
+      try {
+        setLoading(true);
+        setError(null);
+        console.log(`Fetching from: ${API_URL}/analysis`);
+        
+        const response = await fetch(`${API_URL}/analysis`, {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        });
+
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+
+        const result = await response.json();
+        setData(result);
+      } catch (err) {
+        console.error('Fetch error:', err);
+        setError(`Failed to connect to backend: ${err instanceof Error ? err.message : 'Unknown error'}`);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchData();
   }, []);
 
   if (loading) {
     return (
       <div className="flex items-center justify-center py-20">
         <div className="w-8 h-8 border-2 border-[#255531] border-t-transparent rounded-full animate-spin" />
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="bg-red-50 border border-red-200 rounded-lg p-4">
+        <p className="text-red-800 font-semibold">Connection Error</p>
+        <p className="text-red-600 text-sm mt-1">{error}</p>
+        <p className="text-red-600 text-sm mt-2">API URL: {API_URL}</p>
       </div>
     );
   }
