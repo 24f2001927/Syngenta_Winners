@@ -266,10 +266,10 @@ export default function InsightsDashboard() {
       {activeTab === "overview" && (
         <div className="space-y-5">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
-            <StatCard label="Total Growers" value={data.grower_devices_total?.toLocaleString() || "---"} color="from-[#255531] to-[#1a4425]" />
-            <StatCard label="Total Rep Visits" value={data.rep_activity?.total_visits?.toLocaleString() || "---"} color="from-[#6c8b72] to-[#4a6a52]" />
-            <StatCard label="Marketing Leads" value={data.funnel_totals?.total_leads?.toLocaleString() || "---"} color="from-[#d1a15a] to-[#b8893a]" />
-            <StatCard label="WhatsApp Sales" value={`₹${(data.whatsapp_totals?.total_sales || 0).toLocaleString()}`} color="from-[#8a7530] to-[#6a5520]" />
+            <StatCard label="Total Growers" value={formatNumber(data.grower_devices_total)} color="from-[#255531] to-[#1a4425]" />
+            <StatCard label="Total Rep Visits" value={formatNumber(data.rep_activity?.total_visits)} color="from-[#6c8b72] to-[#4a6a52]" />
+            <StatCard label="Marketing Leads" value={formatNumber(data.funnel_totals?.total_leads)} color="from-[#d1a15a] to-[#b8893a]" />
+            <StatCard label="WhatsApp Sales" value={`₹${formatNumber(data.whatsapp_totals?.total_sales)}`} color="from-[#8a7530] to-[#6a5520]" />
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -344,9 +344,9 @@ export default function InsightsDashboard() {
         <div className="space-y-4">
           {data.funnel_totals && (
             <div className="grid grid-cols-3 gap-3">
-              <StatCard label="Total Impressions" value={data.funnel_totals.total_impressions.toLocaleString()} color="from-[#255531] to-[#1a4425]" />
-              <StatCard label="Total Visits" value={data.funnel_totals.total_visits.toLocaleString()} color="from-[#6c8b72] to-[#4a6a52]" />
-              <StatCard label="Total Leads" value={data.funnel_totals.total_leads.toLocaleString()} color="from-[#d1a15a] to-[#b8893a]" />
+              <StatCard label="Total Impressions" value={formatNumber(data.funnel_totals.total_impressions)} color="from-[#255531] to-[#1a4425]" />
+              <StatCard label="Total Visits" value={formatNumber(data.funnel_totals.total_visits)} color="from-[#6c8b72] to-[#4a6a52]" />
+              <StatCard label="Total Leads" value={formatNumber(data.funnel_totals.total_leads)} color="from-[#d1a15a] to-[#b8893a]" />
             </div>
           )}
           <div className="bg-[#CDC098] rounded-xl p-4 border border-[#B8A878]">
@@ -416,9 +416,9 @@ export default function InsightsDashboard() {
         <div className="space-y-4">
           {data.whatsapp_totals && (
             <div className="grid grid-cols-3 gap-3">
-              <StatCard label="Total Sales" value={`₹${data.whatsapp_totals.total_sales.toLocaleString()}`} color="from-[#8a7530] to-[#6a5520]" />
-              <StatCard label="Transactions" value={data.whatsapp_totals.total_transactions.toLocaleString()} color="from-[#255531] to-[#1a4425]" />
-              <StatCard label="Total Clicks" value={data.whatsapp_totals.total_clicks.toLocaleString()} color="from-[#6c8b72] to-[#4a6a52]" />
+              <StatCard label="Total Sales" value={`₹${formatNumber(data.whatsapp_totals.total_sales)}`} color="from-[#8a7530] to-[#6a5520]" />
+              <StatCard label="Transactions" value={formatNumber(data.whatsapp_totals.total_transactions)} color="from-[#255531] to-[#1a4425]" />
+              <StatCard label="Total Clicks" value={formatNumber(data.whatsapp_totals.total_clicks)} color="from-[#6c8b72] to-[#4a6a52]" />
             </div>
           )}
           <div className="bg-[#CDC098] rounded-xl p-4 border border-[#B8A878]">
@@ -456,4 +456,12 @@ function MetricBox({ value, label, small, unit }: { value: string; label: string
       <p className="text-[10px] text-[#2a3a2a] uppercase tracking-wider mt-0.5">{label}</p>
     </div>
   );
+}
+
+// Helper function to safely format numbers
+function formatNumber(value: any): string {
+  if (value === null || value === undefined) return "---";
+  if (typeof value === "string") return value;
+  if (typeof value === "number") return value.toLocaleString();
+  return "---";
 }
