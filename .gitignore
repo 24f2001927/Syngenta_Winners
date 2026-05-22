@@ -1,0 +1,42 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+*.egg
+
+# Virtual environments
+venv/
+venv2/
+.venv/
+env/
+
+# Environment files (API keys, secrets)
+.env
+.env.*
+
+# Node / Frontend build artifacts
+node_modules/
+.next/
+out/
+build/
+*.tsbuildinfo
+
+# OS junk
+.DS_Store
+Thumbs.db
+__MACOSX/
+
+# IDE configs
+.vscode/
+.idea/
+
+# Logs
+*.log
+
+# Presentation collateral (not source code)
+*.pptx
+presentation.html
+
+# Agent configs (machine-specific)
+AGENTS.md
+CLAUDE.md
