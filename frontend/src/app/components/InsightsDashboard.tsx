@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from "react";
 
-const API_URL = "http://localhost:8000";
+const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000";
 
 interface AnalysisData {
   grower_devices?: { device_type: string; count: number }[];
