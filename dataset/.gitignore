@@ -1,3 +1,3 @@
-# Confidential — do not commit raw grower/retailer/POS data
-*
+# Confidential — do not commit raw grower/retailer/POS data (uncommented for Render deployment)
+# *
 !.gitignore

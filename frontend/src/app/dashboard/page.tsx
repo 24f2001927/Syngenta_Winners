@@ -49,7 +49,7 @@ export default function MarketingDashboard() {
   const [creatingCampaign, setCreatingCampaign] = useState(false);
   const [newCampaignError, setNewCampaignError] = useState("");
 
-  const API_URL = "http://localhost:8000";
+  const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000";
 
   useEffect(() => {
     fetchStats();
