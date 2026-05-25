@@ -19,6 +19,7 @@ export default function HomePage() {
                 <p className="text-[9px] text-[#255531]/85 leading-none tracking-widest uppercase font-medium">AI Shield for Indian Agriculture</p>
               </div>
             </div>
+            <div><h2>Hackathon Losers</h2></div>
             <Link
               href="/dashboard"
               className="px-4 py-2 bg-gradient-to-r from-[#255531] to-[#1a4425] hover:from-[#326c43] hover:to-[#255531] text-white rounded-xl text-sm font-semibold transition-all shadow-lg border border-[#255531]/20"
